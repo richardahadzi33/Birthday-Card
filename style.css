@@ -1,0 +1,178 @@
+/* 1. VARIABLE DEFINITIONS */
+:root {
+    --bg-color: #f7f1e3;
+    --card-bg: #ffffff;
+    --front-color: #ff6b6b;
+    --text-color: #2c3e50;
+    --cake-bottom: #706fd3;
+    --cake-mid: #ff793f;
+    --cake-top: #ffb142;
+    --white: #ffffff;
+}
+
+/* 2. PAGE RESET & LAYOUT */
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+/* 3. CARD CONTAINER */
+.card {
+    position: relative;
+    width: 350px;
+    height: 500px; /* Increased height for your long message */
+    perspective: 1500px;
+}
+
+/* 4. FRONT COVER */
+.front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--front-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transform-origin: left;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.1);
+    color: white;
+    cursor: pointer;
+    backface-visibility: hidden;
+}
+
+.card:hover .front {
+    transform: rotateY(-160deg);
+}
+
+.hover-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 2px solid white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    animation: bounce 2s infinite;
+}
+
+/* 5. INSIDE THE CARD (THE STAGE) */
+.text-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Stacks Cake then Text */
+    align-items: center;
+    justify-content: flex-start; /* Starts from top */
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.05);
+}
+
+/* 6. THE CAKE DESIGN */
+.cake {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px; /* Space for the candle */
+    margin-bottom: 20px;
+    transform: scale(0); /* Hidden at start */
+    transform-origin: bottom;
+    transition: transform 0.6s 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover .cake {
+    transform: scale(0.9); /* Pops up on hover */
+}
+
+.layer {
+    height: 35px;
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset -10px 0 10px rgba(0,0,0,0.1);
+}
+
+.layer-bottom { width: 140px; background: var(--cake-bottom); }
+.layer-middle { width: 110px; background: var(--cake-mid); }
+.layer-top    { width: 80px;  background: var(--cake-top); position: relative; }
+
+/* 7. ICING & DRIPS */
+.icing {
+    width: 100%;
+    height: 10px;
+    background: var(--white);
+    position: absolute;
+    top: 0;
+    border-radius: 8px 8px 0 0;
+}
+
+.drip {
+    width: 10px;
+    background: var(--white);
+    position: absolute;
+    border-radius: 0 0 10px 10px;
+}
+.drip1 { height: 18px; left: 10px; }
+.drip2 { height: 25px; left: 35px; }
+.drip3 { height: 15px; right: 10px; }
+
+/* 8. CANDLE & FLAME */
+.candle {
+    width: 8px;
+    height: 30px;
+    background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff6b6b 5px, #ff6b6b 10px);
+    position: absolute;
+    top: -30px;
+    border-radius: 3px 3px 0 0;
+}
+
+.flame {
+    width: 12px;
+    height: 20px;
+    background: #f1c40f;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 15px #f1c40f;
+    animation: flicker 0.1s infinite alternate;
+}
+
+/* 9. MESSAGE STYLING */
+#head {
+    font-size: 1.1rem;
+    color: var(--front-color);
+    margin: 10px 0 5px 0;
+    text-align: center;
+}
+
+.text-container div {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    text-align: center;
+    padding: 0 10px;
+}
+
+/* 10. ANIMATIONS */
+@keyframes flicker {
+    from { transform: translateX(-50%) scale(1) rotate(-2deg); }
+    to { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
